@@ -64,6 +64,7 @@ export const Label = styled.h2`
   padding: 0 0 16px;
   font-size: 16px;
   box-sizing: border-box;
+  font-weight: normal;
 `
 export const ZipcodeWrapper = styled.div`
   & input:nth-of-type(1) {
