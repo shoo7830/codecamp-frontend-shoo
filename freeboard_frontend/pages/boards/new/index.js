@@ -2,7 +2,7 @@ import { Wrapper, Title, GridWrapper, Label, FormWrapper, ZipcodeWrapper, FormIn
 
 export default function FreeboardNew() {
   return(
-    <>
+
       <Wrapper>
         <Title>게시물 등록</Title>
         <GridWrapper>
@@ -71,6 +71,6 @@ export default function FreeboardNew() {
         <RegistButton type="button">등록하기</RegistButton>
       </Wrapper>
       
-    </>
+
   )
 }
