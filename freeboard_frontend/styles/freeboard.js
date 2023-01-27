@@ -124,3 +124,9 @@ export const RegistButton = styled.button`
   cursor: pointer;
   box-sizing: border-box;
 `
+
+export const ErrorMessage = styled.div`
+  padding-top: 10px;
+  font-size: 14px;
+  color: #ff0000;
+`
