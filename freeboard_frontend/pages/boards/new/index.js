@@ -1,15 +1,26 @@
+import { gql, useMutation } from '@apollo/client'
 import { useState } from 'react'
 import { Wrapper, Title, GridWrapper, Label, FormWrapper, ZipcodeWrapper, FormInput, FormContent, RegistButton, ErrorMessage } from '../../../styles/freeboard'
 
+const CREATE_BOARD = gql`
+  mutation createBoard($createBoardInput: CreateBoardInput!) {
+  createBoard(createBoardInput: $createBoardInput) 
+  {
+    _id
+  }
+}
+`
+
 const FreeboardNew = () => {
+  const [createBoard] = useMutation(CREATE_BOARD)
   const [writer, setWriter] = useState('')
   const [writerError, setWriterError] = useState('')
   const [password, setPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
   const [title, setTitle] = useState('')
   const [titleError, setTitleError] = useState('')
-  const [content, setContent] = useState('')
-  const [contentError, setContentError] = useState('')
+  const [contents, setContents] = useState('')
+  const [contentsError, setContentsError] = useState('')
 
   const onChangeWriter = (event) => {
     setWriter(event.target.value)
@@ -33,14 +44,14 @@ const FreeboardNew = () => {
   }
 
   const onChangeContent = (event) => {
-    setContent(event.target.value)
+    setContents(event.target.value)
     if (event.target.value) {
-      setContentError('')
+      setContentsError('')
     }
   }
 
 
-  function onClickSignUp(){
+  const onClickSignUp = async() =>{
     // 검증하기
     if(!writer) {
       setWriterError('! 작성자를 입력해주세요.')
@@ -51,13 +62,26 @@ const FreeboardNew = () => {
     if(!title) {
       setTitleError('! 제목을 입력해주세요.')
     }
-    if(!content) {
-      setContentError('! 내용을 입력해주세요.')
+    if(!contents) {
+      setContentsError('! 내용을 입력해주세요.')
     }
 
-    if (writer && password  && title  && content) {
+    if (writer && password  && title  && contents) {
+      const result = await createBoard({
+        variables: {
+          createBoardInput: {
+            writer,
+            password,
+            title,
+            contents
+          }
+        }
+      })
+      console.log(result)
       alert('게시물 등록이 완료되었습니다.')
     }
+
+    
   }
 
   return(
@@ -83,7 +107,7 @@ const FreeboardNew = () => {
       <FormWrapper>
         <Label>내용</Label>
         <FormContent placeholder='내용을 작성해주세요.' onChange={onChangeContent} />
-        <ErrorMessage>{contentError}</ErrorMessage>
+        <ErrorMessage>{contentsError}</ErrorMessage>
       </FormWrapper>
       <FormWrapper>
         <Label>주소</Label>
